@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page 4 of Simon's first html/css website</title>
+  <link href="./resources/css/index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+	<h1>Webcam using JS</h1>
+	
+	<video id="video" width="640" height="480" autoplay></video>
+
+    	<script>
+        	const video = document.getElementById('video');
+
+        	// Request access to the webcam
+        	navigator.mediaDevices.getUserMedia({ video: true })
+            		.then(stream => { video.srcObject = stream;})
+            		.catch(error => {console.error('Error accessing webcam:', error);
+            });
+    	</script>
+</body>
+</html>
