@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page 5 of Simon's first html/css website</title>
+  <link href="./resources/css/indexnopic.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+	<h1>HikVision Live Stream - none of the attempts work</h1>
+	<a href="index.html">Home</a>
+
+<h1>Notes</h1>
+<p>	
+This works (after a delay) in the VLC app: rtsp://aaaa:pppp@192.168.0.58:554/Streaming/channels/01<br/>
+</p>
+</br>
+<p>
+The following allows one version of vlc to generate the stream and the other to consume it. Note that it is http not https.<br/>
+
+1. **Convert the RTSP Stream**:<br/>
+   - Open VLC and go to `Media` > `Stream`.<br/>
+   - In the `Open Media` dialog, enter your RTSP URL and click `Stream`.<br/>
+   - In the `Stream Output` dialog, choose `Next`.<br/>
+   - Select `HTTP` as the destination and configure the port and path (e.g., `8080` and `/stream`).<br/>
+   - Click `Next` and choose the transcoding options if needed.<br/>
+   - Click `Stream` to start the conversion.<br/>
+<br/>
+2. **Consume the Converted Stream**:<br/>
+   - Open another instance of VLC.<br/>
+   - Go to `Media` > `Open Network Stream`.<br/>
+   - Enter the URL of the converted stream (e.g., `http>://localhost:8080/stream`). [http://192.168.0.22:8080/streamvlc]<br/>
+   - Click `Play` to start consuming the stream.<br/>
+</p>
+
+<p>
+Browser Compatibility: Most modern browsers have dropped support for plugins like the VLC web plugin. Internet Explorer is one of the few that still supports it1
+</p>
+
+<p>
+<a href="https://www.videoconverterfactory.com/tips/rtsp-html5.html">This site gives instructions</a><br/>
+:sout=#transcode{vcodec=theo,vb=800,acodec=vorb,ab=128,channels=2,samplerate=44100,scodec=none} :no-sout-all :sout-keep
+</p>
+
+<p>
+application/x-mpegURL<br/>
+ <video id="videoPlayer" width="640" height="480" controls autoplay>
+        <source src="http://192.168.0.22:8080/streamvlc" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+    </video>
+</p>
+
+<p>
+videoPlayer<br/>
+ <video id="videoPlayer" width="640" height="480" controls autoplay>
+        <source src="http://192.168.0.22:8080/streamvlc" type="video/ogg">
+        Your browser does not support the video tag.
+    </video>
+</p>
+
+<p>
+default <br/>
+    <video width="640" height="480" controls autoplay>
+        <source src="http://192.168.0.22:8080/streamvlc" type="video/ogg">
+        Your browser does not support the video tag.
+    </video>
+</p>
+
+<p>
+    <video width="640" height="480" controls autoplay>
+        <source src="rtsp://aaaa:pppp@192.168.0.58:554/Streaming/channels/01">
+        Your browser does not support the video tag.
+    </video>
+</p>
+
+<p>
+<OBJECT classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" codebase="http://downloads.videolan.org/pub/videolan/vlc/latest/win32/axvlc.cab" width="640" height="480" id="vlc" events="True">
+    <param name="Src" value="rtsp://aaaa:pppp@192.168.0.58:554/Streaming/channels/01" />
+    <param name="ShowDisplay" value="True" />
+    <param name="AutoLoop" value="False" />
+    <param name="AutoPlay" value="True" />
+    <embed id="vlcEmb" type="application/x-google-vlc-plugin" version="VideoLAN.VLCPlugin.2" autoplay="yes" loop="no" width="640" height="480" target="rtsp://cameraipaddress"></embed>
+</OBJECT>
+</p>
+
+<p>
+iframe src="http://192.168.0.22:8080/streamvlc" sandbox="allow-scripts allow-same-origin" /
+</p>
+
+<p>
+JS attempt <br/>
+<script>
+var vlc = document.getElementById("vlc");
+function playStream(url) {
+    try {
+        var options = [":aspect-ratio=16:9", "--rtsp-tcp", ":no-video-title-show"];
+        var id = vlc.playlist.add(url, "Stream", options);
+        vlc.playlist.playItem(id);
+    } catch (ex) {
+        console.error(ex);
+    }
+}
+playstream("http://192.168.0.22:8080/streamvlc");
+</scipt>
+</p>
+
+</body>
+</html>
