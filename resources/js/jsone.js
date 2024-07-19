@@ -1,19 +1,33 @@
 	const select = document.querySelector("select");
 	const video = document.getElementById('video');
+	const affect = document.getElementById('affect');
+	const log = document.getElementById('log');
 
-	function setAffect() {
-		const choice = select.value;
+
+	function setAffect(selectValue) {
+		//const choice = select.value;
+		const choice = selectValue;
+
+
 		switch (choice) {
+		case "dummy":
+			video.style.filter = 'grayscale(100%)';
+			affect.style.backgroundColor='lightblue';
+			break;
 		case "grey":
 			video.style.filter = 'grayscale(100%)';
+			affect.style.backgroundColor='lightgray';
 			break;
 		case "blur":
 			video.style.filter = 'blur(10px)';
+			affect.style.backgroundColor='pink';
 			break;
 		default:
 			video.style.filter = '';
+			affect.style.backgroundColor='initial';
 			break;
 		}
+		log.innerHTML += ", " + choice;
 	}
        
 	
@@ -24,4 +38,4 @@
 	video.style.backgroundColor = "green";
 
 
-        select.addEventListener("click", setAffect);
+        select.addEventListener("click", () => setAffect(select.value));
