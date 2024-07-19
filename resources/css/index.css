@@ -21,4 +21,17 @@ a {
 
 body {
   background-image: url("../images/large1.jpg");
+  background-size: cover;
+}
+
+.opaq {
+  opacity: 0.7;
+}
+
+.blur {
+  filter: blur(10px);
+}
+
+.grey {
+  filter: grayscale(100%);
 }

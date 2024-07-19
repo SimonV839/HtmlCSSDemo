@@ -7,20 +7,43 @@
 <body>
 	<h1>Webcam using JS</h1>
 	<a href="index.html">Home</a>
-	
-<p>
-	<video id="video" width="640" height="480" autoplay></video>
 
-    	<script>
-        	const video = document.getElementById('video');
+	<p class="opaq" >
+		<video id="video" width="640" height="480" autoplay></video>
 
-        	// Request access to the webcam
-        	navigator.mediaDevices.getUserMedia({ video: true })
-            		.then(stream => { video.srcObject = stream;})
-            		.catch(error => {console.error('Error accessing webcam:', error);
-            });
-    	</script>
-</p>
+	    	<script>
+        		const video = document.getElementById('video');
+			navigator.mediaDevices.getUserMedia({ video: true })
+            			.then(stream => { video.srcObject = stream;})
+            			.catch(error => {console.error('Error accessing webcam:', error); });
+	    	</script>
+	</p>
+
+
+	<p>
+		<video id="video2" width="160" height="120" autoplay></video>
+	    	<script>
+        		const video2 = document.getElementById('video2');
+			navigator.mediaDevices.getUserMedia({ video: true })
+            			.then(stream => { video2.srcObject = stream;})
+            			.catch(error => {console.error('Error accessing webcam:', error); });
+	    	</script>
+
+		<video class="grey" id="video3" width="160" height="120" autoplay></video>
+	    	<script>
+        		const video3 = document.getElementById('video3');
+			navigator.mediaDevices.getUserMedia({ video: true })
+            			.then(stream => { video3.srcObject = stream;})
+            			.catch(error => {console.error('Error accessing webcam:', error); });
+	    	</script>
+
+		<video class="blur" id="video4" width="160" height="120" autoplay></video>
+	    	<script>
+        		const video4 = document.getElementById('video4');
+			navigator.mediaDevices.getUserMedia({ video: true })
+            			.then(stream => { video4.srcObject = stream;})
+            			.catch(error => {console.error('Error accessing webcam:', error); });
+	    	</script	</p>
 
 </body>
 </html>
