@@ -38,4 +38,4 @@
 	video.style.backgroundColor = "green";
 
 
-        select.addEventListener("click", () => setAffect(select.value));
+        select.addEventListener("change", () => setAffect(select.value));
