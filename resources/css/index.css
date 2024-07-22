@@ -2,6 +2,10 @@
   font-family: Helvetica, Arial, sans-serif;
 }
 
+body > *{
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
 
 h1 {
   color: SeaGreen;
@@ -11,8 +15,6 @@ h1 {
 p, 
 li {
   font-size: 18px;
-background-color: rgba(255, 255, 255, 0.5);
-
 }
 
 a {
