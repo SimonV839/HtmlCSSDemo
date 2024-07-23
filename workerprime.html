@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Prime numbers</title>
+  </head>
+
+  <body>
+    <p>
+      <a href="index.html">Home</a>
+    </p>
+
+
+    <label for="quota">Number of primes:</label>
+    <input type="text" id="quota" name="quota" value="1000000" />
+
+    <button id="generate">Generate primes</button>
+    <button id="reload">Reload</button>
+
+    <textarea id="user-input" rows="5" cols="62">
+      Try typing in here immediately after pressing "Generate primes"
+    </textarea>
+
+    <div id="output"></div>
+    <div id="log">Log:</div>
+
+	<p>
+		Needs Visual Studio Code - live server to succeed. See below
+	</p>
+<p>
+
+This error typically occurs when you’re trying to load a web worker from a local file system rather than through a web server. Browsers like Chrome enforce strict security policies that prevent scripts from being accessed from a file:// URL, which is why you see the origin as 'null’12.
+
+To resolve this issue, you can:
+
+Use a Local Web Server: Serve your HTML and JavaScript files through a local web server. Tools like Live Server for Visual Studio Code or http-server for Node.js can help you set this up easily34.
+Relative Paths: Ensure that your worker script is being referenced with a relative path. For example:
+JavaScript
+
+new Worker('./scripts/worker.js');
+AI-generated code. Review and use carefully. More info on FAQ.</p>
+  </body>
+
+  <script>
+	try {
+	const log = document.getElementById("log");
+	log.textContent += "started";
+
+	// Create a new worker, giving it the code in "generate.js"
+	log.textContent += "; about new worker";
+	const worker = new Worker("./resources/js/genprimes.js");
+	log.textContent += "; new worker";
+
+
+	// When the user clicks "Generate primes", send a message to the worker.
+	// The message command is "generate", and the message also contains "quota",
+	// which is the number of primes to generate.
+	document.querySelector("#generate").addEventListener("click", () => {
+		const quota = document.querySelector("#quota").value;
+		worker.postMessage({
+			command: "generate",
+			quota,
+		});
+	});
+	log.textContent += "; event listener generate click added";
+
+	// When the worker sends a message back to the main thread,
+	// update the output box with a message for the user, including the number of
+	// primes that were generated, taken from the message data.
+	worker.addEventListener("message", (message) => {
+		const output = document.querySelector("#output");
+		output.textContent = `Finished generating ${message.data.length} primes!`;
+		output.textContent += "," + message.data;
+
+	});
+	log.textContent += "; event listener worker added";
+
+
+	document.querySelector("#reload").addEventListener("click", () => {
+		document.querySelector("#user-input").value ='Try typing in here immediately after pressing "Generate primes"';
+	document.location.reload();
+	log.textContent += "; event listener reload click added";
+	});
+	} catch(err) {
+	log.textContent += "; error: " + err.message;
+	}
+  </script>
+</html>
