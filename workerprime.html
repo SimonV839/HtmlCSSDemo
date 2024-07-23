@@ -10,12 +10,17 @@
     <p>
       <a href="index.html">Home</a>
     </p>
+	<p>
+		Demonstrates worker threads. These process one message at a time. Messages can be queued but only one is processed at a time.
+	</p>
 
 
     <label for="quota">Number of primes:</label>
-    <input type="text" id="quota" name="quota" value="1000000" />
+    <input type="text" id="quota" name="quota" value="10000" />
 
     <button id="generate">Generate primes</button>
+    <button id="genmessage">Generate message</button>
+    <button id="terminate">Terminate</button>
     <button id="reload">Reload</button>
 
     <textarea id="user-input" rows="5" cols="62">
@@ -45,45 +50,56 @@ AI-generated code. Review and use carefully. More info on FAQ.</p>
   <script>
 	try {
 	const log = document.getElementById("log");
-	log.textContent += "started";
 
 	// Create a new worker, giving it the code in "generate.js"
-	log.textContent += "; about new worker";
 	const worker = new Worker("./resources/js/genprimes.js");
-	log.textContent += "; new worker";
 
 
 	// When the user clicks "Generate primes", send a message to the worker.
 	// The message command is "generate", and the message also contains "quota",
 	// which is the number of primes to generate.
 	document.querySelector("#generate").addEventListener("click", () => {
+		output.textContent = "";
 		const quota = document.querySelector("#quota").value;
 		worker.postMessage({
 			command: "generate",
-			quota,
+			quota: quota,
 		});
 	});
-	log.textContent += "; event listener generate click added";
+	document.querySelector("#genmessage").addEventListener("click", () => {
+		output.textContent = "";
+		const quota = document.querySelector("#quota").value;
+		worker.postMessage({
+			command: "somethingotherthangenerate",
+			quota: quota,
+		});
+	});
+	document.querySelector("#terminate").addEventListener("click", () => {
+			worker.terminate();
+			output.textContent = "Worker thread has been terminated - it will no longer receive messages";
+		});
+
 
 	// When the worker sends a message back to the main thread,
 	// update the output box with a message for the user, including the number of
 	// primes that were generated, taken from the message data.
 	worker.addEventListener("message", (message) => {
 		const output = document.querySelector("#output");
-		output.textContent = `Finished generating ${message.data.length} primes!`;
-		output.textContent += "," + message.data;
+		//output.textContent = `Finished generating ${message.data.length} primes!`;
+		output.textContent = `Finished generating ${message.data.primes.length}!`;
+		output.textContent += "(" + message.data.primes + ")";
+		output.textContent += ". Message:" + message.data.message;
 
 	});
-	log.textContent += "; event listener worker added";
 
 
 	document.querySelector("#reload").addEventListener("click", () => {
 		document.querySelector("#user-input").value ='Try typing in here immediately after pressing "Generate primes"';
 	document.location.reload();
-	log.textContent += "; event listener reload click added";
 	});
 	} catch(err) {
-	log.textContent += "; error: " + err.message;
+		log.textContent = "error: " + err.message;
 	}
+
   </script>
 </html>
