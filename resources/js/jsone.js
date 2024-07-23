@@ -2,6 +2,8 @@
 	const video = document.getElementById('video');
 	const affect = document.getElementById('affect');
 	const log = document.getElementById('log');
+	const loglist = document.getElementById('loglist');
+
 
 
 	function setAffect(selectValue) {
@@ -27,6 +29,11 @@
 			affect.style.backgroundColor='initial';
 			break;
 		}
+
+		const para = document.createElement('p');
+		loglist.appendChild(para);
+		para.textContent = choice;
+
 		log.innerHTML += ", " + choice;
 	}
        
