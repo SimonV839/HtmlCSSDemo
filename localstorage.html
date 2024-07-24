@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page x of Simon's first html/css website</title>
+</head>
+<body>
+    <form>
+	<h1>Local storage example - does not persist beween sessions!</h1>
+	<a href="index.html">Home</a>
+    <p>
+		<label for="dumbText">Not remembered:</label>
+		<input type="dumbText" id="dumbText" name="dumbText" value="Text not persisted is this." />
+    </p>
+    <p>
+		<label for="pertext">Text:</label>
+		<input type="text" id="pertext" name="pertext" value="Persistent text is this." />
+    </p>
+    <p>
+        <div>
+            <button id="forgetText">Forget</button>
+        </div>
+    </p>
+    <p id="log">
+		Single line log:
+	</p>
+    <p>
+        <l>
+            <li>
+                It can only store strings, specifically UTF-16 string format, with two bytes per character. This can restrict you from using it for more complex scenarios although, HTML can be stored as a string
+            </li>
+            <li>
+                It’s local to the browser and specific to the origin (per domain and protocol), and there’s no guarantee that the data will persist even in that same context        
+            </li>
+        </l>
+    </p>
+    </form>
+
+    <script>
+		const pertext = document.getElementById("pertext");
+		const forgetButton = document.getElementById("forgetText");
+        const log = document.getElementById('log');
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", (e) => e.preventDefault());
+
+        let startVal = localStorage.getItem("perText");
+        log.innerHTML += ', start getItem("perText") = ' + startVal;
+        startVal += "-";
+
+        pertext.value =startVal;
+        log.innerHTML += ', getItem("perText") = ' + pertext.value;
+
+
+        pertext.addEventListener("input", () => { 
+            localStorage.setItem("perText", pertext.textContent);
+            log.innerHTML += ", setItem" + pertext.value;
+            const val = localStorage.getItem("perText");
+            log.innerHTML += ', getItem("perText") = ' + pertext.value;
+        });
+
+        forgetButton.addEventListener("click", () => { 
+            localStorage.clear("perText");
+            const val = localStorage.removeItem("perText");
+            log.innerHTML += ', after forget getItem("perText") = ' + localStorage.getItem("perText");
+        });
+
+
+    </script>
+</body>
+</html>
